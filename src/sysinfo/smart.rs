@@ -1,3 +1,6 @@
+use std::os::unix::ffi::OsStrExt;
+use std::path::Path;
+
 use libatasmart::Disk;
 use rocket::log::private::error;
 use sysinfo::Disks;
@@ -8,7 +11,12 @@ pub fn smart_status_ok() -> bool {
         .iter()
         .filter_map(|disk| {
             Disk::new(disk.name().as_ref())
-                .inspect_err(|error| error!("SMART: {error}"))
+                .inspect_err(|error| {
+                    error!(
+                        "SMART: {error}: {}",
+                        String::from_utf8_lossy(disk.name().as_bytes())
+                    );
+                })
                 .ok()
         })
         .all(|mut disk| disk.get_smart_status().unwrap_or(false))
