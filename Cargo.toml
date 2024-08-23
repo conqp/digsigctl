@@ -12,6 +12,7 @@ configparser = "3.1"
 either = "1.13"
 erased-serde = "0.4"
 ipnetwork = { version = "0.20", default-features = false }
+libatasmart = "0.3.1"
 local-ip-address = "0.6"
 rocket = { version = "0.5", features = ["json"] }
 serde = { version = "1.0", features = ["derive"] }

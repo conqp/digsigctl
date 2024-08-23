@@ -14,6 +14,8 @@ use mount::root_mounted_ro;
 use sensors::sensors;
 use uptime::Uptime;
 
+use crate::sysinfo::smart::smart_status_ok;
+
 mod application;
 mod cmdline;
 mod cpuinfo;
@@ -22,6 +24,7 @@ mod efi;
 mod meminfo;
 mod mount;
 mod sensors;
+mod smart;
 mod uptime;
 
 #[allow(dead_code)]
@@ -47,6 +50,7 @@ pub struct SystemInformation {
     root_ro: Option<bool>,
     sensors: Option<serde_json::Value>,
     uptime: Uptime,
+    smart_ok: bool,
 }
 
 impl Default for SystemInformation {
@@ -70,6 +74,7 @@ impl Default for SystemInformation {
             root_ro: root_mounted_ro().ok(),
             sensors: sensors().ok(),
             uptime: Uptime::default(),
+            smart_ok: smart_status_ok(),
         }
     }
 }
