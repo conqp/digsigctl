@@ -1,5 +1,4 @@
 use std::os::unix::ffi::OsStrExt;
-use std::path::Path;
 
 use libatasmart::Disk;
 use rocket::log::private::error;
