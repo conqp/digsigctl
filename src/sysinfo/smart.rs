@@ -8,7 +8,7 @@ pub fn smart_status_ok() -> bool {
         .iter()
         .filter_map(|disk| {
             Disk::new(disk.name().as_ref())
-                .inspect_err(|error| error!("{error}"))
+                .inspect_err(|error| error!("SMART: {error}"))
                 .ok()
         })
         .all(|mut disk| disk.get_smart_status().unwrap_or(false))
